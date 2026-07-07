@@ -1,6 +1,6 @@
-# Manhã com Deus — Devocional Anual
+# Deus e Sentido — Devocional Anual
 
-Site estático (sem build, sem dependências) do devocional diário **Manhã com Deus**,
+Site estático (sem build, sem dependências) do devocional diário **Deus e Sentido**,
 por Dr. Eduardo D'Angelo Mimessi — 366 meditações unindo a Logoterapia de Viktor Frankl
 e a espiritualidade evangélica.
 
