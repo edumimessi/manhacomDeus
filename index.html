@@ -357,8 +357,14 @@ addEventListener('keydown',e=>{
   if(e.key==='ArrowLeft')go(idx-1);
 });
 
-const start=parseInt(localStorage.getItem(LASTKEY)||'0',10);
-go(isNaN(start)?0:start, false);
+// Abre sempre na meditação do dia atual (mês + dia do calendário)
+function indiceDeHoje(){
+  const now=new Date(), m=now.getMonth()+1, d=now.getDate();
+  let i=DIAS.findIndex(x=>x.m===m && x.d===d);
+  if(i<0) i=DIAS.findIndex(x=>x.m===m); // ex.: 29-31/fev em ano não bissexto
+  return i<0?0:i;
+}
+go(indiceDeHoje(), false);
 </script>
 </body>
 </html>
