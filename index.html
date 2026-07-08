@@ -7,6 +7,12 @@
 <meta name="description" content="Deus e Sentido — Devocional diário para o ano inteiro. 366 meditações de fé e espiritualidade evangélica, uma para cada dia. Por Dr. Eduardo D'Angelo Mimessi.">
 <meta name="author" content="Dr. Eduardo D'Angelo Mimessi">
 <meta name="theme-color" content="#12243d">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Deus e Sentido">
+<link rel="apple-touch-icon" href="icon-180.png">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Deus e Sentido — Devocional Anual">
 <meta property="og:description" content="Um versículo, uma meditação e uma oração para começar cada dia com Deus.">
@@ -192,6 +198,7 @@
       </div>
     </div>
     <div class="topbar-actions">
+      <button class="btn btn-ghost" id="installBtn" style="display:none">⤓ Instalar app</button>
       <button class="btn btn-gold" id="todayBtn">Ler o dia de hoje</button>
       <button class="icon-btn" id="themeBtn" aria-label="Alternar tema">◐</button>
     </div>
@@ -365,6 +372,21 @@ function indiceDeHoje(){
   return i<0?0:i;
 }
 go(indiceDeHoje(), false);
+
+/* ---- App (PWA): instalação + offline ---- */
+let deferredPrompt=null;
+const installBtn=$('#installBtn');
+addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferredPrompt=e; installBtn.style.display='inline-flex'; });
+installBtn.onclick=async()=>{
+  if(!deferredPrompt) return;
+  deferredPrompt.prompt();
+  await deferredPrompt.userChoice;
+  deferredPrompt=null; installBtn.style.display='none';
+};
+addEventListener('appinstalled',()=>{ installBtn.style.display='none'; deferredPrompt=null; toast('App instalado 🌅'); });
+if('serviceWorker' in navigator){
+  addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
 </script>
 </body>
 </html>
