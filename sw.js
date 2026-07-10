@@ -1,5 +1,5 @@
 /* Deus e Sentido — service worker (offline + app) */
-const CACHE = 'deus-e-sentido-v1';
+const CACHE = 'deus-e-sentido-v2';
 const ASSETS = [
   './',
   './index.html',
