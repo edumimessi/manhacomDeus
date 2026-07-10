@@ -166,6 +166,10 @@
   footer{max-width:var(--maxread);margin:56px auto 0;padding:26px 4px 60px;border-top:1px solid var(--line);
     text-align:center;color:var(--ink-faint);font-size:.78rem;line-height:1.7}
   footer b{color:var(--ink-soft);font-family:var(--serif);font-weight:600}
+  .visitas{margin-top:16px;display:inline-flex;align-items:center;gap:7px;font-size:.72rem;
+    letter-spacing:.05em;color:var(--gold-deep);border:1px solid var(--line);border-radius:40px;
+    padding:6px 15px;font-variant-numeric:tabular-nums}
+  .visitas b{color:var(--gold-deep);font-family:var(--sans);font-weight:700}
 
   .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);opacity:0;
     background:var(--ink);color:var(--paper);padding:11px 20px;border-radius:40px;font-size:.82rem;
@@ -235,6 +239,7 @@
     <b>Deus e Sentido — Devocional Anual</b><br>
     Dr. Eduardo D'Angelo Mimessi · Devocional diário · 366 meditações<br>
     <span id="footNote"></span>
+    <div class="visitas" id="visitas" style="display:none">☀ <b id="visitasN"></b> visitas</div>
   </footer>
 </main>
 
@@ -387,6 +392,23 @@ addEventListener('appinstalled',()=>{ installBtn.style.display='none'; deferredP
 if('serviceWorker' in navigator){
   addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 }
+
+/* ---- Contador de visitas (serviço gratuito; some sozinho se falhar) ---- */
+(function(){
+  const NS='deusesentido-com-br', KEY='visitas', BASE='https://abacus.jasoncameron.dev';
+  const box=$('#visitas'), n=$('#visitasN');
+  const jaContou=sessionStorage.getItem('des_visit')==='1';
+  const url=(jaContou?BASE+'/get/':BASE+'/hit/')+NS+'/'+KEY;
+  fetch(url,{cache:'no-store'})
+    .then(r=>r.ok?r.json():null)
+    .then(d=>{
+      if(!d||typeof d.value==='undefined') return;
+      n.textContent=Number(d.value).toLocaleString('pt-BR');
+      box.style.display='inline-flex';
+      sessionStorage.setItem('des_visit','1');
+    })
+    .catch(()=>{});
+})();
 </script>
 </body>
 </html>
