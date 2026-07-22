@@ -1,8 +1,8 @@
 # Deus e Sentido — Devocional Anual
 
 Site estático (sem build, sem dependências) do devocional diário **Deus e Sentido**,
-por Dr. Eduardo D'Angelo Mimessi — 366 meditações unindo a Logoterapia de Viktor Frankl
-e a espiritualidade evangélica.
+por Dr. Eduardo D'Angelo Mimessi — 366 meditações de sabedoria cristã, reflexão sobre
+o sentido da vida e espiritualidade evangélica.
 
 ## Arquivos
 - `index.html` — a página (interface, estilos e lógica)
