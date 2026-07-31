@@ -1,10 +1,12 @@
 /* Deus e Sentido — service worker (offline + app) */
-const CACHE = 'deus-e-sentido-v5';
+const CACHE = 'deus-e-sentido-v6';
 const ASSETS = [
   './',
   './index.html',
   './assets/dias.js',
+  './assets/estudos.js',
   './manifest.webmanifest',
+  './og-image.png',
   './icon-192.png',
   './icon-512.png',
   './icon-180.png',
