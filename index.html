@@ -248,6 +248,26 @@
     letter-spacing:.05em;color:var(--gold-deep);border:1px solid var(--line);border-radius:40px;
     padding:6px 15px;font-variant-numeric:tabular-nums}
   .visitas b{color:var(--gold-deep);font-family:var(--sans);font-weight:700}
+  footer a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid var(--line-strong)}
+  footer a:hover{border-color:var(--gold)}
+
+  .about{max-width:var(--maxread);margin:56px auto 0;padding:26px 24px;border:1px solid var(--line);
+    border-radius:14px;background:var(--card);box-shadow:var(--shadow);scroll-margin-top:80px}
+  .about .lab{font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    margin-bottom:9px}
+  .about h2{font-family:var(--serif);font-weight:600;font-size:1.22rem;margin:0 0 3px;line-height:1.25}
+  .about .role{font-size:.76rem;letter-spacing:.05em;color:var(--ink-faint);margin-bottom:15px}
+  .about p{margin:0 0 13px;font-size:.93rem;color:var(--ink-soft)}
+  .about .site{display:inline-block;font-size:.82rem;font-weight:600;text-decoration:none;
+    border-bottom:1px solid var(--line-strong);padding-bottom:2px;transition:border-color .18s}
+  .about .site:hover{border-color:var(--gold)}
+  /* dourado mais escuro no tema claro: o --gold-deep não alcança 4,5:1 sobre o cartão */
+  .about .lab,.about .site{color:#7d6024}
+  @media (prefers-color-scheme:dark){.about .lab,.about .site{color:var(--gold-deep)}}
+  :root[data-theme="light"] .about .lab,:root[data-theme="light"] .about .site{color:#7d6024}
+  :root[data-theme="dark"] .about .lab,:root[data-theme="dark"] .about .site{color:var(--gold-deep)}
+  .hero-meta a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid var(--line-strong)}
+  .hero-meta a:hover{border-color:var(--gold)}
 
   .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);opacity:0;
     background:var(--ink);color:var(--paper);padding:11px 20px;border-radius:40px;font-size:.82rem;
@@ -294,7 +314,7 @@
   <h1>Deus e <em>Sentido</em></h1>
   <p class="hero-sub">Um versículo, uma meditação e uma oração para começar cada dia com Deus.</p>
   <div class="hero-meta">
-    <span>Dr. Eduardo D'Angelo Mimessi</span>·<span id="totalMeta">366 dias</span>
+    <span><a href="#sobre" data-scroll>Dr. Eduardo D'Angelo Mimessi</a></span>·<span id="totalMeta">366 dias</span>
   </div>
   <div class="rule"></div>
   <div class="switch-wrap">
@@ -352,9 +372,21 @@
     </div>
   </section>
 
+  <section class="about" id="sobre">
+    <div class="lab">Sobre o autor</div>
+    <h2>Dr. Eduardo D'Angelo Mimessi</h2>
+    <div class="role">Médico e autor</div>
+    <p>Médico dedicado à saúde mental e ao cuidado de pessoas que procuram um sentido
+       para a própria vida. Escreve sobre fé, vida interior e as grandes tradições
+       espirituais da humanidade.</p>
+    <p>Idealizou, escreveu e programou este devocional — das 366 meditações e dos 13
+       estudos a cada linha de código do site.</p>
+    <a class="site" href="https://clinicamimessi.com.br" target="_blank" rel="noopener noreferrer">Conheça o trabalho do autor →</a>
+  </section>
+
   <footer>
     <b>Deus e Sentido — Devocional Anual</b><br>
-    Dr. Eduardo D'Angelo Mimessi · 366 meditações · 13 temas de estudo<br>
+    Escrito e desenvolvido por <a href="#sobre" data-scroll>Dr. Eduardo D'Angelo Mimessi</a> · 366 meditações · 13 temas de estudo<br>
     <span id="footNote"></span>
     <div class="visitas" id="visitas" style="display:none">☀ <b id="visitasN"></b> visitas</div>
   </footer>
@@ -719,6 +751,15 @@ function aplicarRota(scroll){
 }
 aplicarRota(false);
 addEventListener('hashchange',()=>{ if(!navegando) aplicarRota(false); });
+
+/* Links do "Sobre o autor": rolam a página sem tocar no hash, que aqui é rota */
+document.querySelectorAll('a[data-scroll]').forEach(a=>{
+  a.onclick=e=>{
+    e.preventDefault();
+    const alvo=document.querySelector(a.getAttribute('href'));
+    if(alvo) alvo.scrollIntoView({behavior:'smooth',block:'start'});
+  };
+});
 
 /* ---- App (PWA): instalação + offline ---- */
 let deferredPrompt=null;
