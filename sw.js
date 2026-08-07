@@ -1,5 +1,5 @@
 /* Deus e Sentido — service worker (offline + app) */
-const CACHE = 'deus-e-sentido-v7';
+const CACHE = 'deus-e-sentido-v8';
 const ASSETS = [
   './',
   './index.html',
@@ -38,7 +38,10 @@ self.addEventListener('fetch', e => {
         if (res && res.status === 200 && res.type === 'basic') cache.put(req, res.clone());
         return res;
       }).catch(() => null);
-      return cached || (await network) || cache.match('./index.html');
+      const response = cached || (await network);
+      if (response) return response;
+      if (req.mode === 'navigate') return cache.match('./index.html');
+      return Response.error();
     })
   );
 });
