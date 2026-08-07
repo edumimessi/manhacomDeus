@@ -172,6 +172,7 @@
   .verse .vt{font-family:var(--serif);font-style:italic;font-size:1.24rem;line-height:1.55;color:var(--ink)}
   .verse .vr{margin-top:12px;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
     color:var(--gold-deep);font-weight:700}
+  .verse .vn{margin-top:9px;font-size:.7rem;line-height:1.45;color:var(--ink-faint);font-style:normal}
   .verse.ref-only .vr{margin-top:0}
   .prose{font-family:var(--serif);font-size:1.16rem;line-height:1.72;color:var(--ink)}
   .prose p{margin:0 0 1.1em}
@@ -426,6 +427,7 @@ const MES_SUB = {
   10:"A igreja", 11:"Testemunhas", 12:"Esperança"
 };
 
+const META = window.DEVOCIONAL_META || {fuso:'America/Sao_Paulo', notaBiblica:''};
 const MESES = window.MESES, DIAS = window.DIAS, ESTUDOS = window.ESTUDOS || [];
 const $ = s => document.querySelector(s);
 const reader = $('#reader'), monthNav = $('#monthNav'), dayStrip = $('#dayStrip');
@@ -534,7 +536,8 @@ function render(){
   const verseBlock = day.ref ? (
     '<div class="verse'+(day.txt?'':' ref-only')+'">'+
     (day.txt?'<div class="vt">“'+esc(day.txt)+'”</div>':'')+
-    '<div class="vr">'+esc(day.ref)+'</div></div>') : '';
+    '<div class="vr">'+esc(day.ref)+'</div>'+
+    (META.notaBiblica?'<div class="vn">'+esc(META.notaBiblica)+'</div>':'')+'</div>') : '';
 
   const ests = estudoDoMes(day.m);
   const linkEst = ests.length
@@ -737,7 +740,10 @@ addEventListener('keydown',e=>{
 
 /* ---------- início ---------- */
 function indiceDeHoje(){
-  const now=new Date(), m=now.getMonth()+1, d=now.getDate();
+  const parts=new Intl.DateTimeFormat('en-CA',{timeZone:META.fuso||'America/Sao_Paulo',month:'numeric',day:'numeric'})
+    .formatToParts(new Date());
+  const values=Object.fromEntries(parts.map(p=>[p.type,p.value]));
+  const m=Number(values.month), d=Number(values.day);
   let i=DIAS.findIndex(x=>x.m===m && x.d===d);
   if(i<0) i=DIAS.findIndex(x=>x.m===m);
   return i<0?0:i;
