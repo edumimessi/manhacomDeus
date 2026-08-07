@@ -41,6 +41,24 @@ Todo o texto está em `assets/dias.js`. Cada dia é um objeto:
 
 Cada mês tem tema e frase-âncora em `window.MESES`.
 
+`window.DEVOCIONAL_META` registra o fuso canônico (`America/Sao_Paulo`), o estado
+da revisão editorial e a nota sobre os excertos bíblicos. Os textos bíblicos do
+acervo são apresentados para leitura devocional; para estudo e citação, o leitor
+deve conferir o contexto e a redação em uma tradução bíblica identificada.
+
+## Validação editorial
+
+Antes de publicar, execute:
+
+```bash
+node scripts/validate.mjs
+```
+
+O validador exige 366 datas únicas, incluindo 29 de fevereiro, campos obrigatórios,
+coerência entre referência e texto bíblico, títulos, meditações, práticas e orações
+sem duplicação integral, fuso de São Paulo e metadados editoriais. A correspondência
+exegética entre cada versículo e a meditação permanece uma revisão humana progressiva.
+
 **Parágrafos:** a meditação (`med`) é quebrada automaticamente em 2 ou 3 parágrafos.
 Para controlar a quebra manualmente, basta inserir uma linha em branco (`\n\n`) no texto —
 o site respeita a divisão que você escrever.
